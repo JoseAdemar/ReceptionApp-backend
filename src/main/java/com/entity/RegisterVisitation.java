@@ -20,8 +20,6 @@ public class RegisterVisitation {
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private Long id;
 	 
-	 private RegisterVisitor registerVisitor;
-	 
 	 private LocalDateTime checkinTime;
 	 
 	 private LocalDateTime checkoutTime;
