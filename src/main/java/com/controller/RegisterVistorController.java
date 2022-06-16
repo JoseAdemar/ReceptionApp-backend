@@ -33,10 +33,9 @@ public class RegisterVistorController {
 
 	@GET
 	@Path("/all")
-	public List<RegisterVisitorDTO> findAll(List<RegisterVisitor> visitor) {
-	
-		return  registerVisitorService.registerVisitorDTO(visitor);
+	public void findAllRegisterVisitor(List<RegisterVisitorDTO> visitorDTO, List<RegisterVisitor> visitor) {
 
+		registerVisitorService.findAll(visitorDTO, visitor);
 	}
 
 }

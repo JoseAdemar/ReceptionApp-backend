@@ -1,14 +1,12 @@
 package com.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import com.dto.RegisterVisitorDTO;
 import com.entity.RegisterVisitor;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.repository.RegisterVisitorRepository;
 
 @ApplicationScoped
@@ -29,21 +27,30 @@ public class RegisterVisitorService {
 	}
 
 	// This method is to return the entire list, but it's not working
-	public List<RegisterVisitorDTO> registerVisitorDTO() {
+	
+	public void findAll(List<RegisterVisitorDTO> registerVisitorDTO, List<RegisterVisitor> registerVisitor) {
 
-		List<RegisterVisitor> registerVisitor = new ArrayList<>();
-		List<RegisterVisitorDTO> dto = new ArrayList<>();
+		registerVisitor = registerVisitorRepository.findAll().list();
 
-		for (RegisterVisitor register : registerVisitor) {
+		for (RegisterVisitor visitor : registerVisitor) {
 
-			dto.add(register.getId());
-			dto.add(register.getName());
-			dto.add(register.getPhone());
-			dto.add(register.getEmail());
+			visitor.getId();
+			visitor.getName();
+			visitor.getPhone();
+			visitor.getEmail();
 
+			for (RegisterVisitorDTO dto : registerVisitorDTO) {
+            
+				dto.setId(visitor.getId());
+				dto.getId();
+				dto.setName(visitor.getName());
+				dto.getName();
+				dto.setPhone(visitor.getPhone());
+				dto.getPhone();
+				dto.setEmail(visitor.getEmail());
+				dto.getEmail();
+			}
 		}
-
-		return dto = registerVisitorRepository.findAll();
 
 	}
 }
