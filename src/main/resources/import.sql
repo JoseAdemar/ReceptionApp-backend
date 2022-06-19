@@ -5,3 +5,11 @@ INSERT INTO TBL_REGISTER_VISITOR
 INSERT INTO TBL_REGISTER_VISITOR 
             (name,birthDate,phone,email)
             VALUES('Pedro','18/06/1990','88547415','pedro@domain.com');
+            
+INSERT INTO TBL_REGISTER_VISITOR 
+            (name,birthDate,phone,email)
+            VALUES('Ana','18/06/1988','8985474159','ana@domain.com');
+
+INSERT INTO TBL_REGISTER_VISITOR 
+            (name,birthDate,phone,email)
+            VALUES('Matheus','15/07/2020','5685474159','matheus@domain.com');

@@ -1,12 +1,15 @@
 package com.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
+import javax.ws.rs.NotFoundException;
 
 import com.dto.RegisterVisitorDTO;
 import com.entity.RegisterVisitor;
-import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.repository.RegisterVisitorRepository;
 
 @ApplicationScoped
@@ -18,39 +21,43 @@ public class RegisterVisitorService {
 		this.registerVisitorRepository = registerVisitorRepository;
 	}
 
-	// This method it's working
-	public RegisterVisitorDTO findById(Long id) {
-		RegisterVisitor registerVisitor = registerVisitorRepository.findById(id);
-		RegisterVisitorDTO dto = new RegisterVisitorDTO(registerVisitor);
+	public Optional<RegisterVisitorDTO> findById(Long id) {
+		Optional<RegisterVisitor> registerVisitor = registerVisitorRepository.findByIdOptional(id);
+		Optional<RegisterVisitorDTO> dto = Optional.of(new RegisterVisitorDTO(registerVisitor.get()));
+
+		if (registerVisitor.isEmpty() || dto.isEmpty()) {
+			throw new NotFoundException("Visitor with the id " + id + "not found");
+		}
 
 		return dto;
 	}
 
-	// This method is to return the entire list, but it's not working
-	
-	public void findAll(List<RegisterVisitorDTO> registerVisitorDTO, List<RegisterVisitor> registerVisitor) {
+	public List<RegisterVisitorDTO> findAll() {
 
-		registerVisitor = registerVisitorRepository.findAll().list();
+		List<RegisterVisitor> registerVisitor = registerVisitorRepository.findAll().list();
+		List<RegisterVisitorDTO> dto = new ArrayList<RegisterVisitorDTO>();
 
 		for (RegisterVisitor visitor : registerVisitor) {
 
-			visitor.getId();
-			visitor.getName();
-			visitor.getPhone();
-			visitor.getEmail();
+			dto.add(new RegisterVisitorDTO(visitor));
 
-			for (RegisterVisitorDTO dto : registerVisitorDTO) {
-            
-				dto.setId(visitor.getId());
-				dto.getId();
-				dto.setName(visitor.getName());
-				dto.getName();
-				dto.setPhone(visitor.getPhone());
-				dto.getPhone();
-				dto.setEmail(visitor.getEmail());
-				dto.getEmail();
-			}
 		}
 
+		return dto;
+	}
+
+	@Transactional
+	public Optional<RegisterVisitorDTO> deleteById(Long id) {
+
+		Optional<RegisterVisitor> visitor = Optional.of(registerVisitorRepository.findById(id));
+		Optional<RegisterVisitorDTO> dto = Optional.of(new RegisterVisitorDTO(visitor.get()));
+		if (visitor.isEmpty()) {
+			throw new NotFoundException("Visitor with the " + id + "not found");
+		} else {
+
+			registerVisitorRepository.deleteById(id);
+		}
+
+		return dto;
 	}
 }

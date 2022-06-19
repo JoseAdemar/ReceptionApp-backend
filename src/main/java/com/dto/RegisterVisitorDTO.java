@@ -23,5 +23,4 @@ public class RegisterVisitorDTO {
 		this.phone = registerVisitor.getPhone();
 		this.email = registerVisitor.getEmail();
 	}
-
 }
