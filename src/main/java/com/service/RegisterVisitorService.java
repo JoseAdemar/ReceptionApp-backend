@@ -1,5 +1,6 @@
 package com.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -28,29 +29,13 @@ public class RegisterVisitorService {
 
 	// This method is to return the entire list, but it's not working
 	
-	public void findAll(List<RegisterVisitorDTO> registerVisitorDTO, List<RegisterVisitor> registerVisitor) {
-
-		registerVisitor = registerVisitorRepository.findAll().list();
-
+	public List<RegisterVisitorDTO>  findAll() {
+		List<RegisterVisitor> registerVisitor = registerVisitorRepository.findAll().list();
+		List<RegisterVisitorDTO> registerVisitorDTO = new ArrayList<>();
 		for (RegisterVisitor visitor : registerVisitor) {
-
-			visitor.getId();
-			visitor.getName();
-			visitor.getPhone();
-			visitor.getEmail();
-
-			for (RegisterVisitorDTO dto : registerVisitorDTO) {
-            
-				dto.setId(visitor.getId());
-				dto.getId();
-				dto.setName(visitor.getName());
-				dto.getName();
-				dto.setPhone(visitor.getPhone());
-				dto.getPhone();
-				dto.setEmail(visitor.getEmail());
-				dto.getEmail();
-			}
+			RegisterVisitorDTO dto = new RegisterVisitorDTO(visitor);
+			registerVisitorDTO.add(dto);
 		}
-
+		return registerVisitorDTO;
 	}
 }
