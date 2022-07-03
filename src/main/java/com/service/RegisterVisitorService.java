@@ -21,15 +21,18 @@ public class RegisterVisitorService {
 		this.registerVisitorRepository = registerVisitorRepository;
 	}
 
-	public Optional<RegisterVisitorDTO> findById(Long id) {
-		Optional<RegisterVisitor> registerVisitor = registerVisitorRepository.findByIdOptional(id);
+	@Transactional
+	public void registerVisitor(RegisterVisitor visitor) {
+		registerVisitorRepository.persist(visitor);
+
+	}
+
+	public RegisterVisitorDTO findById(Long id) {
+		Optional<RegisterVisitor> registerVisitor = Optional.of(registerVisitorRepository.findByIdOptional(id)
+				.orElseThrow(() -> new NotFoundException("Visitor " + id + " not found")));
 		Optional<RegisterVisitorDTO> dto = Optional.of(new RegisterVisitorDTO(registerVisitor.get()));
 
-		if (registerVisitor.isEmpty() || dto.isEmpty()) {
-			throw new NotFoundException("Visitor with the id " + id + "not found");
-		}
-
-		return dto;
+		return dto.get();
 	}
 
 	public List<RegisterVisitorDTO> findAll() {
@@ -47,17 +50,16 @@ public class RegisterVisitorService {
 	}
 
 	@Transactional
-	public Optional<RegisterVisitorDTO> deleteById(Long id) {
+	public RegisterVisitorDTO deleteById(Long id) {
 
-		Optional<RegisterVisitor> visitor = Optional.of(registerVisitorRepository.findById(id));
-		Optional<RegisterVisitorDTO> dto = Optional.of(new RegisterVisitorDTO(visitor.get()));
-		if (visitor.isEmpty()) {
-			throw new NotFoundException("Visitor with the " + id + "not found");
-		} else {
+		Optional<RegisterVisitor> registerVisitor = Optional.of(registerVisitorRepository.findByIdOptional(id)
+				.orElseThrow(() -> new NotFoundException("Visitor " + id + " not found")));
+		Optional<RegisterVisitorDTO> dto = Optional.of(new RegisterVisitorDTO(registerVisitor.get()));
 
+		if (dto.isPresent()) {
 			registerVisitorRepository.deleteById(id);
 		}
+		return dto.get();
 
-		return dto;
 	}
 }

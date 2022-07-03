@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,6 +29,10 @@ public class RegisterVisitation {
 	 private String department;
 	 
 	 private String reasonForVisit;
+	 
+	 @ManyToOne()
+	 @JoinColumn(name = "registerVisitor_id")
+	 private RegisterVisitor registerVisitor;
 
 	 
 }
