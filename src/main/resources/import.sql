@@ -13,3 +13,11 @@ INSERT INTO TBL_REGISTER_VISITOR
 INSERT INTO TBL_REGISTER_VISITOR 
             (name,birthDate,phone,email)
             VALUES('Matheus','15/07/2020','5685474159','matheus@domain.com');
+            
+            
+INSERT INTO REGISTERVISITATION 
+            (checkinTime,checkoutTime,department,reasonForVisit,registerVisitor)
+            VALUES('2022-07-09','2022-07-09','IT','Interview',1);
+            
+    
+            

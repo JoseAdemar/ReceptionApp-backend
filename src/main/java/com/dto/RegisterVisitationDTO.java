@@ -11,6 +11,8 @@ import lombok.Setter;
 @Setter
 public class RegisterVisitationDTO {
 
+	private Long id;
+
 	private LocalDateTime checkinTime;
 
 	private LocalDateTime checkoutTime;
@@ -20,4 +22,5 @@ public class RegisterVisitationDTO {
 	private String reasonForVisit;
 
 	private RegisterVisitor registerVisitor;
+
 }
