@@ -1,15 +1,12 @@
 package com.mapper;
 
-import java.util.List;
-
-
 public interface GenericMapper<D, E> {
-	
-	D toDto(E entity);
 
-	List<D> toDto(List<E> entityList);
-
-	E toEntity(D dto);
-
-	List<E> toEntity(List<D> dtoList);
+//	D dtoTo(E entity);
+//
+//	List<D> listDOtO(E entity);
+//
+//	E entityTo(D dto);
+//
+//	List<E> listEntityTo(D dto);
 }
