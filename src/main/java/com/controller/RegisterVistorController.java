@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -52,10 +53,20 @@ public class RegisterVistorController {
 	}
 
 	@DELETE
-	@Path("/{id}")
+	@Path("/delete/{id}")
 	public void deleteVisitorById(@PathParam("id") Long id) {
 		registerVisitorService.deleteById(id);
 
 	}
+	
+	@PUT
+	@Path("/update/{id}")
+	public Response updateVisitors(@PathParam("id") Long id, @RequestBody RegisterVisitor registerVisitor) {
+		
+	  RegisterVisitor updateVisitor =	registerVisitorService.updateRegisterVisitor(id, registerVisitor);
+		
+		return Response.status(Status.OK).entity(updateVisitor).build();
+	}
+	
 
 }

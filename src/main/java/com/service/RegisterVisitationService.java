@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import javax.ws.rs.NotFoundException;
 
 import com.dto.RegisterVisitationDTO;
 import com.entity.RegisterVisitation;
+import com.exceptions.ReturnExceptionMessage;
 import com.mapper.RegisterVisitationMapper;
 import com.repository.RegisterVisitationRepository;
 
@@ -55,6 +57,42 @@ public class RegisterVisitationService {
 		RegisterVisitation visitation = registerVisitationRepository.findById(id);
 		RegisterVisitationDTO dto = registerVisitationMapper.toDto(visitation);
 		return Optional.of(dto);
+	}
+
+	@Transactional
+	public RegisterVisitationDTO uPDateRegisterVisitation(RegisterVisitationDTO dto) {
+
+		Optional<RegisterVisitation> registerVisitation = registerVisitationRepository.findByIdOptional(dto.getId());
+
+		if (registerVisitation.isEmpty()) {
+			throw new ReturnExceptionMessage("it was not found register to  Id = " + dto.getId());
+		}
+
+		registerVisitationMapper.merge(dto, registerVisitation.get());
+
+		dto.setId(dto.getId());
+		dto.setCheckinTime(dto.getCheckinTime());
+		dto.setCheckoutTime(dto.getCheckoutTime());
+		dto.setDepartment(dto.getDepartment());
+		dto.setReasonForVisit(dto.getReasonForVisit());
+		dto.setRegisterVisitor(dto.getRegisterVisitor());
+
+		registerVisitationRepository.persist(registerVisitation.get());
+
+		RegisterVisitationDTO visitationDTO = registerVisitationMapper.toDto(registerVisitation.get());
+		return visitationDTO;
+	}
+
+	@Transactional
+	public void deleteRegisterVisitationById(Long id) {
+
+		Optional<RegisterVisitation> visitation = Optional.of(registerVisitationRepository.findById(id));
+
+		if (visitation.isEmpty()) {
+			throw new NotFoundException(" Not Found this " + id);
+		}
+
+		registerVisitationRepository.deleteById(id);
 	}
 
 }

@@ -10,6 +10,7 @@ import javax.ws.rs.NotFoundException;
 
 import com.dto.RegisterVisitorDTO;
 import com.entity.RegisterVisitor;
+import com.exceptions.ReturnExceptionMessage;
 import com.repository.RegisterVisitorRepository;
 
 @ApplicationScoped
@@ -19,6 +20,7 @@ public class RegisterVisitorService {
 
 	public RegisterVisitorService(RegisterVisitorRepository registerVisitorRepository) {
 		this.registerVisitorRepository = registerVisitorRepository;
+
 	}
 
 	@Transactional
@@ -60,6 +62,28 @@ public class RegisterVisitorService {
 			registerVisitorRepository.deleteById(id);
 		}
 		return dto.get();
+
+	}
+
+	@Transactional
+	public RegisterVisitor updateRegisterVisitor(Long id, RegisterVisitor registerVisitor) {
+
+		Optional<RegisterVisitor> visitor = Optional.of(registerVisitorRepository.findByIdOptional(id).get());
+
+		if (visitor.isEmpty()) {
+			throw new ReturnExceptionMessage(" Not Found Id = " + registerVisitor.getId());
+		}
+		
+		RegisterVisitor updatingRegisterVisitor = visitor.get();
+
+		updatingRegisterVisitor.setId(registerVisitor.getId());
+		updatingRegisterVisitor.setName(registerVisitor.getName());
+		updatingRegisterVisitor.setEmail(registerVisitor.getEmail());
+		updatingRegisterVisitor.setPhone(registerVisitor.getPhone());
+
+		registerVisitorRepository.persist(updatingRegisterVisitor);
+		
+		return updatingRegisterVisitor;
 
 	}
 }

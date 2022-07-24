@@ -5,8 +5,11 @@ import com.entity.RegisterVisitation;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "cdi")
+@Mapper(componentModel = "cdi",
+ nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface RegisterVisitationMapper extends GenericMapper<RegisterVisitationDTO, RegisterVisitation> {
 
 	
@@ -26,5 +29,10 @@ public interface RegisterVisitationMapper extends GenericMapper<RegisterVisitati
 	@Mapping(target = "reasonForVisit", source = "reasonForVisit")
 	@Mapping(target = "registerVisitor", source = "registerVisitor")
 	public RegisterVisitation toEntity(RegisterVisitationDTO visitationDTO);
+	
+	
+	@Mapping(target = "id", ignore = true)
+	public void merge(RegisterVisitationDTO dto, @MappingTarget RegisterVisitation visitation);
+	
 
 }
