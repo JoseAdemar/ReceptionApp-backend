@@ -2,11 +2,11 @@ package com.repository;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import com.entity.RegisterVisitor;
+import com.entity.Customer;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepositoryBase;
 
 @ApplicationScoped
-public class RegisterVisitorRepository implements PanacheRepositoryBase<RegisterVisitor, Long> {
+public class CustomerRepository implements PanacheRepositoryBase<Customer, Long> {
 
 }

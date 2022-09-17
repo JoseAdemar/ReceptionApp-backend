@@ -1,5 +1,6 @@
 package com.entity;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,9 +10,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@Entity(name = "TBL_REGISTER_VISITOR")
+@Entity(name = "TBL_CUSTOMER")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class RegisterVisitor {
+public class Customer {
 
 	@Id
 	@EqualsAndHashCode.Include
@@ -19,10 +20,16 @@ public class RegisterVisitor {
 	private Long id;
 
 	private String name;
+	
+	private String socialSecurityNumber;
 
 	private String birthDate;
 
-	private String phone;
+	@Embedded
+	private PhoneNumber phoneNumber;
+	
+	@Embedded
+	private Address address;
 
 	private String email;
 
